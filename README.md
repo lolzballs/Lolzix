@@ -1,4 +1,4 @@
 Lolzix
 ======
 
-A kernel for the Raspberry Pi, coding in Assembly.
+A kernel for the Raspberry Pi, coded in Assembly.
