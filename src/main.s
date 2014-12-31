@@ -1,20 +1,29 @@
 .section .init
 .globl _start
 _start:
+  b main
 
-ldr r0,=0x20200000
+.section .text
+main:
+  mov sp,#0x8000
 
-mov r1,#1
-lsl r1,#18
-
-str r1,[r0,#4]
-
-mov r1,#1
-lsl r1,#16
+  pinNum .req r0
+  pinFunc .req r1
+  mov pinNum,#16
+  mov pinFunc,#1
+  bl setGPIOFunction
+  .unreq pinNum
+  .unreq pinFunc
 
 loop$:
 
-str r1,[r0,#40]
+pinNum .req r0
+pinVal .req r1
+mov pinNum,#16
+mov pinVal,#0
+bl setGPIO
+.unreq pinNum
+.unreq pinVal
 
 mov r2,#0x3F0000
 wait1$:
@@ -22,7 +31,13 @@ wait1$:
 	cmp r2,#0
 	bne wait1$
 	
-str r1,[r0,#28]
+pinNum .req r0
+pinVal .req r1
+mov pinNum,#16
+mov pinVal,#1
+bl setGPIO
+.unreq pinNum
+.unreq pinVal
 
 mov r2,#0x3F0000
 wait2$:
